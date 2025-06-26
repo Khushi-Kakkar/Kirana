@@ -50,7 +50,7 @@ public class AuthController {
         userRepository.save(user);
         return ResponseEntity.ok("Signup successful");
     }
-
+    
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody SigninRequest request) {
         User user = userRepository.findByEmail(request.getEmail());
