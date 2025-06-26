@@ -11,7 +11,7 @@ Kirana Register is a Spring Boot-based backend system for managing small retail 
 - [API Testing with Postman](#api-testing-with-postman)
 - [Logging with ELK Stack](#logging-with-elk-stack)
 - [Kafka for Report Processing](#kafka-for-report-processing)
-
+- [Monitoring with Prometheus and Grafana](#Monitoring-with-Prometheus-and-Grafana)
 ---
 
 ## Project Features
@@ -106,6 +106,23 @@ register/
       components:
         - KafkaTemplate for producing
         - @KafkaListener for consuming
-  
+
+---
+## Monitoring with Prometheus and Grafana
+
+- Application metrics exposed via `/actuator/prometheus` using Micrometer.
+- Dockerized Prometheus server configured to scrape metrics from Spring Boot app.
+- Grafana dashboard (JVM Micrometer) visualizes:
+  - HTTP request throughput and latency
+  - JVM heap and non-heap memory usage
+  - Thread pool statistics
+
+   ### How to Run
+
+   1. Make sure the backend app is running with `/actuator/prometheus` exposed.
+   2. Start Prometheus and Grafana:
+      ```bash
+      docker-compose up -d
+
 
 
