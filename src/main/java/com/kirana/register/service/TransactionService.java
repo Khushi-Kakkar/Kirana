@@ -25,14 +25,14 @@ public class TransactionService {
     private CurrencyConversionService currencyConversionService;
 
     public Transaction recordTransaction(User user, BigDecimal amount, String currency, String type) {
-        System.out.println("🚨 TransactionService.recordTransaction() STARTED");
+        System.out.println("TransactionService.recordTransaction() STARTED");
 
 
         try {
-            System.out.println("🚨 TransactionService.recordTransaction() STARTED");
+            System.out.println("TransactionService.recordTransaction() STARTED");
             System.out.println("SERVICE: user = " + user.getEmail());
             System.out.println("SERVICE: amount = " + amount + ", currency = " + currency + ", type = " + type);
-            System.out.println("🔥 Calling currencyConversionService...");
+            System.out.println("Calling currencyConversionService...");
             BigDecimal amountInINR = currencyConversionService.convertToINR(amount, currency);
             System.out.println("SERVICE: Converted amount in INR = " + amountInINR);
     
@@ -55,7 +55,7 @@ public class TransactionService {
             return transactionRepository.save(transaction);
     
         } catch (Exception e) {
-            System.out.println("🔥 ERROR in TransactionService: " + e.getMessage());
+            System.out.println("ERROR in TransactionService: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("Transaction failed", e);
         }
