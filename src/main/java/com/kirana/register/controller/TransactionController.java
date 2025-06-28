@@ -1,7 +1,6 @@
 package com.kirana.register.controller;
 
-import com.kirana.register.kafka.consumer.ReportConsumer;
-import com.kirana.register.kafka.dto.ReportResult;
+
 import com.kirana.register.model.Transaction;
 import com.kirana.register.model.User;
 import com.kirana.register.service.RateLimiterService;
@@ -82,23 +81,5 @@ public class TransactionController {
         }
 
         return ResponseEntity.ok(user.getBalance());
-    }
-
-    @GetMapping("/report")
-    public ResponseEntity<?> getReport(@RequestParam String range) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            return ResponseEntity.status(404).body("User not found");
-        }
-
-        ReportResult result = ReportConsumer.getCachedReport(user.getId(), range.toLowerCase());
-        if (result == null) {
-            return ResponseEntity.status(202).body("Report is still being generated. Please try again shortly.");
-        }
-
-        return ResponseEntity.ok(result);
     }
 }

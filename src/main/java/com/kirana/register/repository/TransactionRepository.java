@@ -11,4 +11,5 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     List<Transaction> findByUserIdAndTimestampBetween(Long userId, LocalDateTime start, LocalDateTime end);
+    List<Transaction> findByTimestampBetween(LocalDateTime start, LocalDateTime end);
 }

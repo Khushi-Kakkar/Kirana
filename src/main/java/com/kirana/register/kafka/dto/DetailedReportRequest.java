@@ -1,14 +1,17 @@
 package com.kirana.register.kafka.dto;
 
-public class ReportRequest {
+
+public class DetailedReportRequest {
     private Long userId;
     private String range; 
+    private boolean isAdmin;
 
-    public ReportRequest() {}
+    public DetailedReportRequest() {}
 
-    public ReportRequest(Long userId, String range) {
+    public DetailedReportRequest(Long userId, String range, boolean isAdmin) {
         this.userId = userId;
         this.range = range;
+        this.isAdmin = isAdmin;
     }
     
     public Long getUserId() {
@@ -26,4 +29,12 @@ public class ReportRequest {
     public void setRange(String range) {
         this.range = range;
     }
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+    public void setAdmin(boolean isAdmin) { 
+        this.isAdmin = isAdmin;
+    }
 }
+
+

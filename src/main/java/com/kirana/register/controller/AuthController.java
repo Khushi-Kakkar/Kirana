@@ -1,8 +1,6 @@
 package com.kirana.register.controller;
 
 import com.kirana.register.dto.SignupRequest;
-import com.kirana.register.kafka.dto.ReportRequest;
-import com.kirana.register.kafka.producer.ReportProducer;
 import com.kirana.register.dto.SigninRequest;
 import com.kirana.register.model.User;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,10 +9,8 @@ import com.kirana.register.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,8 +23,7 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
-    private ReportProducer reportProducer;
+    
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -74,19 +69,6 @@ public class AuthController {
         return ResponseEntity.ok("Welcome Admin");
     }
 
-    @PostMapping("/report")
-    public ResponseEntity<String> triggerReport(@RequestParam String range) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            return ResponseEntity.status(404).body("User not found");
-        }
-
-        ReportRequest request = new ReportRequest(user.getId(), range.toLowerCase());
-        reportProducer.sendReportRequest(request);
-
-        return ResponseEntity.accepted().body("Report request submitted for processing.");
-    }
+    
+    
 }
